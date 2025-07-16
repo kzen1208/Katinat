@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cửa hàng - Katinat</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="custom-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .btn-primary, .checkout-btn, .search-btn, .add-to-cart, .direction-btn, .call-btn,
+        .use-promo-btn, .read-more-btn, .load-more-btn, .category-btn, .add-to-cart-btn {
+            background-color: #E3C08D !important;
+            color: white !important;
+        }
+        .btn-primary:hover, .checkout-btn:hover, .search-btn:hover, .add-to-cart:hover,
+        .direction-btn:hover, .call-btn:hover, .use-promo-btn:hover, .read-more-btn:hover,
+        .load-more-btn:hover, .category-btn:hover, .add-to-cart-btn:hover {
+            background-color: #D1A76F !important;
+        }
+        .store-status.open {
+            background-color: #E3C08D !important;
+        }
+        .text-amber-600, .text-amber-700, .text-amber-800 {
+            color: #E3C08D !important;
+        }
+        body {
+            font-family: 'Fira Sans', 'Roboto', sans-serif !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header bg-sky-950">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://katinat.vn/wp-content/uploads/2023/12/cropped-Kat-Logo-fa-rgb-05__1_-removebg-preview.png" alt="Katinat">
+                </div>
+                <nav class="nav" id="mobileNav">
+                    <a href="index.html" class="nav-link text-white" onclick="toggleMobileMenu()">
+                        <i class="material-icons">home</i>
+                        <span>Trang chủ</span>
+                    </a>
+                    <a href="about.html" class="nav-link text-white" onclick="toggleMobileMenu()">
+                        <i class="material-icons">info</i>
+                        <span>Về chúng tôi</span>
+                    </a>
+                    <a href="menu.html" class="nav-link text-white" onclick="toggleMobileMenu()">
+                        <i class="material-icons">restaurant_menu</i>
+                        <span>Thực đơn</span>
+                    </a>
+                    <a href="stores.html" class="nav-link active text-white" onclick="toggleMobileMenu()">
+                        <i class="material-icons">store</i>
+                        <span>Cửa hàng</span>
+                    </a>
+                    <a href="news.html" class="nav-link text-white" onclick="toggleMobileMenu()">
+                        <i class="material-icons">article</i>
+                        <span>Tin tức</span>
+                    </a>
+                </nav>
+                <div class="header-actions">
+                    <div class="search-box">
+                        <input type="text" placeholder="Tìm kiếm...">
+                        <button class="search-btn"><i class="material-icons">search</i></button>
+                    </div>
+                    <button class="search-toggle-btn text-white" onclick="toggleSearch()">
+                        <i class="material-icons">search</i>
+                    </button>
+                    <button class="cart-btn text-white" onclick="openCart()">
+                        <i class="material-icons">shopping_cart</i> 
+                        <span class="cart-count">0</span>
+                    </button>
+                </div>
+                <div class="mobile-controls">
+                    <button class="mobile-menu-btn text-white" onclick="toggleMobileMenu()">
+                        <i class="material-icons">menu</i>
+                    </button>
+                </div>
+            </div>
+            <div class="mobile-search" id="mobileSearch">
+                <input type="text" placeholder="Tìm kiếm sản phẩm...">
+                <button class="search-btn"><i class="material-icons">search</i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Sidebar Menu -->
+    <div id="sidebarOverlay" class="sidebar-overlay">
+        <div id="sidebarMenu" class="sidebar-menu">
+            <div class="sidebar-header">
+                <img src="https://katinat.vn/wp-content/uploads/2023/12/cropped-Kat-Logo-fa-rgb-05__1_-removebg-preview.png" alt="Katinat" class="sidebar-logo">
+                <button class="sidebar-close" onclick="closeSidebar()">
+                    <i class="material-icons">close</i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="sidebar-link" onclick="closeSidebar()">
+                    <i class="material-icons">home</i>
+                    <span>Trang chủ</span>
+                </a>
+                <a href="about.html" class="sidebar-link" onclick="closeSidebar()">
+                    <i class="material-icons">info</i>
+                    <span>Về chúng tôi</span>
+                </a>
+                <a href="menu.html" class="sidebar-link" onclick="closeSidebar()">
+                    <i class="material-icons">restaurant_menu</i>
+                    <span>Thực đơn</span>
+                </a>
+                <a href="stores.html" class="sidebar-link active" onclick="closeSidebar()">
+                    <i class="material-icons">store</i>
+                    <span>Cửa hàng</span>
+                </a>
+                <a href="news.html" class="sidebar-link" onclick="closeSidebar()">
+                    <i class="material-icons">article</i>
+                    <span>Tin tức</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Store Locator -->
+    <section class="store-page bg-[url('https://katinat.vn/wp-content/uploads/2023/03/bg-store.jpg')] bg-fixed bg-cover bg-center animate__animated animate__fadeIn">
+        <div class="bg-sky-50/90 min-h-screen">
+        <div class="container">
+            <h1 class="page-title animate__animated animate__fadeInDown">Hệ thống cửa hàng Katinat</h1>
+            
+            <!-- Store Distribution -->
+            <div class="store-distribution bg-white rounded-xl shadow-md p-6 mb-8 animate__animated animate__fadeIn">
+                <h2 class="text-2xl font-bold text-[#D1A76F] mb-4 animate__animated animate__fadeInUp">Phân bố cửa hàng</h2>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="region-card bg-[#F9F3E9] p-4 rounded-lg shadow-sm animate__animated animate__fadeInLeft" style="animation-delay: 0.2s;">
+                        <h3 class="text-xl font-bold text-[#E3C08D]">Miền Bắc</h3>
+                        <p class="text-3xl font-extrabold text-[#D1A76F]">15+</p>
+                        <p class="text-gray-600">Cửa hàng</p>
+                        <div class="mt-2">
+                            <span class="text-sm text-gray-500">Hà Nội, Hải Phòng, Quảng Ninh...</span>
+                        </div>
+                    </div>
+                    <div class="region-card bg-[#F9F3E9] p-4 rounded-lg shadow-sm animate__animated animate__fadeInLeft" style="animation-delay: 0.4s;">
+                        <h3 class="text-xl font-bold text-[#E3C08D]">Miền Trung</h3>
+                        <p class="text-3xl font-extrabold text-[#D1A76F]">10+</p>
+                        <p class="text-gray-600">Cửa hàng</p>
+                        <div class="mt-2">
+                            <span class="text-sm text-gray-500">Đà Nẵng, Huế, Nha Trang...</span>
+                        </div>
+                    </div>
+                    <div class="region-card bg-[#F9F3E9] p-4 rounded-lg shadow-sm animate__animated animate__fadeInLeft" style="animation-delay: 0.6s;">
+                        <h3 class="text-xl font-bold text-[#E3C08D]">Miền Nam</h3>
+                        <p class="text-3xl font-extrabold text-[#D1A76F]">25+</p>
+                        <p class="text-gray-600">Cửa hàng</p>
+                        <div class="mt-2">
+                            <span class="text-sm text-gray-500">TP.HCM, Bình Dương, Cần Thơ...</span>
+                        </div>
+                    </div>
+                    <div class="region-card bg-[#F9F3E9] p-4 rounded-lg shadow-sm animate__animated animate__fadeInLeft" style="animation-delay: 0.8s;">
+                        <h3 class="text-xl font-bold text-[#E3C08D]">Quốc tế</h3>
+                        <p class="text-3xl font-extrabold text-[#D1A76F]">5+</p>
+                        <p class="text-gray-600">Cửa hàng</p>
+                        <div class="mt-2">
+                            <span class="text-sm text-gray-500">Singapore, Bangkok, Seoul...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Map Container -->
+            <div class="map-container animate__animated animate__fadeIn">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d250862.88138085825!2d106.53042191483435!3d10.75508586042337!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529292e8d3dd1%3A0xf15f5aad773c112b!2zVGjDoG5oIHBo4buRIEjhu5MgQ2jDrSBNaW5oLCBI4buTIENow60gTWluaCwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1752507221527!5m2!1svi!2s" width="100%" height="400" style="border:0; border-radius: 15px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+
+            <!-- Store List -->
+            <div class="stores-grid">
+                <div class="store-card animate__animated animate__fadeInUp animate__delay-1s hover:animate__pulse" data-lat="10.7769" data-lng="106.7009">
+                    <div class="store-image animate__animated animate__fadeIn animate__delay-1s">
+                        <img src="img/Ba Trieu.jpg" alt="Katinat Bả Triệu" class="animate__animated animate__zoomIn animate__delay-1s">
+                        <div class="store-status open animate__animated animate__fadeInDown animate__delay-1s">Đang mở</div>
+                    </div>
+                    <div class="store-info animate__animated animate__fadeInRight animate__delay-1s">
+                        <h3 class="animate__animated animate__fadeInUp animate__delay-1s">Katinat Bà Triệu</h3>
+                        <p class="animate__animated animate__fadeInLeft animate__delay-1s"><i class="material-icons">location_on</i> Số 131 Bà Triệu, Phường Lê Đại Hành, Quận Hai Bà Trưng, Hà Nội.</p>
+                        <p class="animate__animated animate__fadeInLeft animate__delay-1s"><i class="material-icons">access_time</i> 7:00 - 22:00</p>
+                        <p class="animate__animated animate__fadeInLeft animate__delay-1s"><i class="material-icons">phone</i> (028) 3822 1234</p>
+                        <div class="store-features animate__animated animate__fadeIn animate__delay-2s">
+                            <span class="feature animate__animated animate__fadeInUp animate__delay-2s"><i class="material-icons">wifi</i> WiFi</span>
+                            <span class="feature animate__animated animate__fadeInUp animate__delay-2s"><i class="material-icons">ac_unit</i> Điều hòa</span>
+                            <span class="feature animate__animated animate__fadeInUp animate__delay-2s"><i class="material-icons">local_parking</i> Bãi xe</span>
+                        </div>
+                        <div class="store-actions animate__animated animate__fadeInUp animate__delay-2s">
+                            <button class="direction-btn animate__animated animate__pulse animate__infinite animate__slower w-32 h-10 text-sm flex items-center justify-center" onclick="openGoogleMaps(10.7769, 106.7009, 'Katinat Bả Triệu')">
+                                <i class="material-icons mr-1">directions</i> Chỉ đường
+                            </button>
+                            <button class="call-btn animate__animated animate__pulse animate__infinite animate__slower animate__delay-1s w-32 h-10 text-sm flex items-center justify-center" onclick="callStore('02838221234')">
+                                <i class="material-icons mr-1">phone</i> Gọi
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="store-card animate__animated animate__fadeInUp animate__delay-2s hover:animate__pulse" data-lat="10.7829" data-lng="106.6958">
+                    <div class="store-image animate__animated animate__fadeIn animate__delay-2s">
+                        <img src="img/Ly Thuong Kiet.jpg" alt="Katinat Lý Thường Kiêt" class="animate__animated animate__zoomIn animate__delay-2s">
+                        <div class="store-status open animate__animated animate__fadeInDown animate__delay-2s">Đang mở</div>
+                    </div>
+                    <div class="store-info animate__animated animate__fadeInRight animate__delay-2s">
+                        <h3 class="animate__animated animate__fadeInUp animate__delay-2s">Katinat Lý Thường Kiệt</h3>
+                        <p class="animate__animated animate__fadeInLeft animate__delay-2s"><i class="material-icons">location_on</i> 229 Lý Thường Kiệt, Quận Hoàn Kiếm, Hà Nội</p>
+                        <p class="animate__animated animate__fadeInLeft animate__delay-2s"><i class="material-icons">access_time</i> 6:30 - 23:00</p>
+                        <p class="animate__animated animate__fadeInLeft animate__delay-2s"><i class="material-icons">phone</i> (028) 3829 5678</p>
+                        <div class="store-features animate__animated animate__fadeIn animate__delay-3s">
+                            <span class="feature animate__animated animate__fadeInUp animate__delay-3s"><i class="material-icons">wifi</i> WiFi</span>
+                            <span class="feature animate__animated animate__fadeInUp animate__delay-3s"><i class="material-icons">ac_unit</i> Điều hòa</span>
+                            <span class="feature animate__animated animate__fadeInUp animate__delay-3s"><i class="material-icons">delivery_dining</i> Giao hàng</span>
+                        </div>
+                        <div class="store-actions animate__animated animate__fadeInUp animate__delay-3s">
+                            <button class="direction-btn animate__animated animate__pulse animate__infinite animate__slower w-32 h-10 text-sm flex items-center justify-center" onclick="openGoogleMaps(10.7829, 106.6958, 'Katinat Lê Lợi')">
+                                <i class="material-icons mr-1">directions</i> Chỉ đường
+                            </button>
+                            <button class="call-btn animate__animated animate__pulse animate__infinite animate__slower animate__delay-1s w-32 h-10 text-sm flex items-center justify-center" onclick="callStore('02838295678')">
+                                <i class="material-icons mr-1">phone</i> Gọi
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="store-card animate__animated animate__fadeInUp animate__delay-3s hover:animate__pulse" data-lat="10.7756" data-lng="106.7019">
+                    <div class="store-image animate__animated animate__fadeIn animate__delay-3s">
+                        <img src="img/dk.jpg" alt="Katinat Đồng Khởi" class="animate__animated animate__zoomIn animate__delay-3s">
+                        <div class="store-status open animate__animated animate__fadeInDown animate__delay-3s">Đang mở</div>
+                    </div>
+                    <div class="store-info animate__animated animate__fadeInRight animate__delay-3s">
+                        <h3 class="animate__animated animate__fadeInUp animate__delay-3s">Katinat Đồng Khởi</h3>
+                        <p class="animate__animated animate__fadeInLeft animate__delay-3s"><i class="material-icons">location_on</i> 89 Đồng Khởi, Quận 1, TP.HCM</p>
+                        <p class="animate__animated animate__fadeInLeft animate__delay-3s"><i class="material-icons">access_time</i> 7:00 - 22:30</p>
+                        <p class="animate__animated animate__fadeInLeft animate__delay-3s"><i class="material-icons">phone</i> (028) 3821 9999</p>
+                        <div class="store-features animate__animated animate__fadeIn animate__delay-4s">
+                            <span class="feature animate__animated animate__fadeInUp animate__delay-4s"><i class="material-icons">wifi</i> WiFi</span>
+                            <span class="feature animate__animated animate__fadeInUp animate__delay-4s"><i class="material-icons">ac_unit</i> Điều hòa</span>
+                            <span class="feature animate__animated animate__fadeInUp animate__delay-4s"><i class="material-icons">outdoor_grill</i> Sân thượng</span>
+                        </div>
+                        <div class="store-actions animate__animated animate__fadeInUp animate__delay-4s">
+                            <button class="direction-btn animate__animated animate__pulse animate__infinite animate__slower w-32 h-10 text-sm flex items-center justify-center" onclick="openGoogleMaps(10.7756, 106.7019, 'Katinat Đồng Khởi')">
+                                <i class="material-icons mr-1">directions</i> Chỉ đường
+                            </button>
+                            <button class="call-btn animate__animated animate__pulse animate__infinite animate__slower animate__delay-1s w-32 h-10 text-sm flex items-center justify-center" onclick="callStore('02838219999')">
+                                <i class="material-icons mr-1">phone</i> Gọi
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="store-card animate__animated animate__fadeInUp animate__delay-4s hover:animate__pulse" data-lat="10.8142" data-lng="106.6438">
+                    <div class="store-image animate__animated animate__fadeIn animate__delay-4s">
+                        <img src="img/tb.jpg" alt="Katinat Tân Bình" class="animate__animated animate__zoomIn animate__delay-4s">
+                        <div class="store-status closed animate__animated animate__fadeInDown animate__delay-4s">Đã đóng</div>
+                    </div>
+                    <div class="store-info animate__animated animate__fadeInRight animate__delay-4s">
+                        <h3 class="animate__animated animate__fadeInUp animate__delay-4s">Katinat Tân Bình</h3>
+                        <p class="animate__animated animate__fadeInLeft animate__delay-4s"><i class="material-icons">location_on</i> 456 Cộng Hòa, Quận Tân Bình, TP.HCM</p>
+                        <p class="animate__animated animate__fadeInLeft animate__delay-4s"><i class="material-icons">access_time</i> 6:00 - 22:00</p>
+                        <p class="animate__animated animate__fadeInLeft animate__delay-4s"><i class="material-icons">phone</i> (028) 3844 7777</p>
+                        <div class="store-features animate__animated animate__fadeIn animate__delay-5s">
+                            <span class="feature animate__animated animate__fadeInUp animate__delay-5s"><i class="material-icons">wifi</i> WiFi</span>
+                            <span class="feature animate__animated animate__fadeInUp animate__delay-5s"><i class="material-icons">ac_unit</i> Điều hòa</span>
+                            <span class="feature animate__animated animate__fadeInUp animate__delay-5s"><i class="material-icons">local_parking</i> Bãi xe</span>
+                            <span class="feature animate__animated animate__fadeInUp animate__delay-5s"><i class="material-icons">delivery_dining</i> Giao hàng</span>
+                        </div>
+                        <div class="store-actions animate__animated animate__fadeInUp animate__delay-5s">
+                            <button class="direction-btn animate__animated animate__pulse animate__infinite animate__slower w-32 h-10 text-sm flex items-center justify-center" onclick="openGoogleMaps(10.8142, 106.6438, 'Katinat Tân Bình')">
+                                <i class="material-icons mr-1">directions</i> Chỉ đường
+                            </button>
+                            <button class="call-btn animate__animated animate__pulse animate__infinite animate__slower animate__delay-1s w-32 h-10 text-sm flex items-center justify-center" onclick="callStore('02838447777')">
+                                <i class="material-icons mr-1">phone</i> Gọi
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Về Katinat</h4>
+                    <ul>
+                        <li><a href="#">Giới thiệu</a></li>
+                        <li><a href="#">Tuyển dụng</a></li>
+                        <li><a href="#">Liên hệ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Sản phẩm</h4>
+                    <ul>
+                        <li><a href="#">Trà sữa</a></li>
+                        <li><a href="#">Cà phê</a></li>
+                        <li><a href="#">Trá trái cây</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Hỗ trợ</h4>
+                    <ul>
+                        <li><a href="#">Chính sách</a></li>
+                        <li><a href="#">Điều khoản</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Liên hệ</h4>
+                    <p><i class="material-icons">phone</i> 1900 6969</p>
+                    <p><i class="material-icons">email</i> info@katinat.vn</p>
+                    <div class="social-links">
+                        <a href="#"><i class="material-icons">facebook</i></a>
+                        <a href="#"><i class="material-icons">camera_alt</i></a>
+                        <a href="#"><i class="material-icons">alternate_email</i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="material-icons">shopping_cart</i> Giỏ hàng</h3>
+                <span class="close" onclick="closeCart()">&times;</span>
+            </div>
+            <div class="cart-items" id="cartItems">
+                <!-- Cart items will be populated here -->
+            </div>
+            <div class="cart-total">
+                <div class="total-price">Tổng cộng: <span id="totalPrice">0đ</span></div>
+                <button class="checkout-btn" onclick="openCheckout()">Thanh toán</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Product Options Modal -->
+    <div id="productOptionsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="material-icons">local_cafe</i> <span id="productOptionsTitle">Tùy chọn sản phẩm</span></h3>
+                <span class="close" onclick="closeProductOptions()">&times;</span>
+            </div>
+            <div class="product-options-content">
+                <div class="product-options-image-container">
+                    <img id="productOptionsImage" src="" alt="Sản phẩm" class="product-options-image">
+                </div>
+                
+                <!-- Size Options -->
+                <div class="options-section">
+                    <h4>Chọn loại ly</h4>
+                    <div class="options-group">
+                        <label class="option-item">
+                            <input type="radio" name="size" value="S" checked>
+                            <span class="option-label">Ly thường (S)</span>
+                            <span class="option-price">+0đ</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="size" value="M">
+                            <span class="option-label">Ly lớn (M)</span>
+                            <span class="option-price">+10.000đ</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="size" value="L">
+                            <span class="option-label">Ly đặc biệt (L)</span>
+                            <span class="option-price">+15.000đ</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="size" value="special">
+                            <span class="option-label">Ly chương trình tháng</span>
+                            <span class="option-price">+25.000đ</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Ice Options -->
+                <div class="options-section">
+                    <h4>Lượng đá</h4>
+                    <div class="options-group">
+                        <label class="option-item">
+                            <input type="radio" name="ice" value="100" checked>
+                            <span class="option-label">100% đá</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="ice" value="70">
+                            <span class="option-label">70% đá</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="ice" value="50">
+                            <span class="option-label">50% đá</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="ice" value="30">
+                            <span class="option-label">30% đá</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="ice" value="0">
+                            <span class="option-label">Không đá</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Sugar Options -->
+                <div class="options-section">
+                    <h4>Lượng đường</h4>
+                    <div class="options-group">
+                        <label class="option-item">
+                            <input type="radio" name="sugar" value="100" checked>
+                            <span class="option-label">100% đường</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="sugar" value="70">
+                            <span class="option-label">70% đường</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="sugar" value="50">
+                            <span class="option-label">50% đường</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="sugar" value="30">
+                            <span class="option-label">30% đường</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="sugar" value="0">
+                            <span class="option-label">Không đường</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Toppings -->
+                <div class="options-section">
+                    <h4>Topping</h4>
+                    <div class="options-group">
+                        <label class="option-item">
+                            <input type="checkbox" name="topping" value="tran-chau-den">
+                            <span class="option-label">Trân châu đen</span>
+                            <span class="option-price">+10.000đ</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox" name="topping" value="tran-chau-trang">
+                            <span class="option-label">Trân châu trắng</span>
+                            <span class="option-price">+10.000đ</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox" name="topping" value="thach-tra-xanh">
+                            <span class="option-label">Thạch trà xanh</span>
+                            <span class="option-price">+8.000đ</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox" name="topping" value="pudding">
+                            <span class="option-label">Pudding</span>
+                            <span class="option-price">+8.000đ</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox" name="topping" value="kem-pho-mai">
+                            <span class="option-label">Kem phô mai</span>
+                            <span class="option-price">+15.000đ</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Quantity and Add to Cart -->
+                <div class="product-options-footer">
+                    <div class="quantity-control">
+                        <button type="button" class="qty-btn" onclick="decreaseQuantity()">-</button>
+                        <input type="number" id="productQuantity" value="1" min="1" max="10">
+                        <button type="button" class="qty-btn" onclick="increaseQuantity()">+</button>
+                    </div>
+                    <div class="product-total">
+                        <span>Tổng: </span>
+                        <span id="productTotalPrice">65.000đ</span>
+                    </div>
+                    <button class="add-to-cart-btn w-full" onclick="addToCartWithOptions()">Thêm vào giỏ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="material-icons">payment</i> Thông tin thanh toán</h3>
+                <span class="close" onclick="closeCheckout()">&times;</span>
+            </div>
+            <form id="checkoutForm" class="checkout-form">
+                <div class="form-section">
+                    <h4><i class="material-icons">person</i> Thông tin khách hàng</h4>
+                    <div class="form-group">
+                        <input type="text" id="customerName" placeholder="Họ và tên" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="customerPhone" placeholder="Số điện thoại" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="customerEmail" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <textarea id="customerAddress" placeholder="Địa chỉ giao hàng" rows="3"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h4><i class="material-icons">credit_card</i> Phương thức thanh toán</h4>
+                    <div class="payment-methods">
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="cash" checked>
+                            <span><i class="material-icons">money</i> Tiền mặt</span>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="bank">
+                            <span><i class="material-icons">account_balance</i> Chuyển khoản ngân hàng</span>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="momo">
+                            <span><i class="material-icons">phone_android</i> Ví MoMo</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="bankInfo" class="bank-info" style="display: none;">
+                    <h4><i class="material-icons">account_balance</i> Thông tin chuyển khoản</h4>
+                    <div class="bank-details">
+                        <p><strong>Ngân hàng:</strong> Vietcombank</p>
+                        <p><strong>Số tài khoản:</strong> 1234567890</p>
+                        <p><strong>Chủ tài khoản:</strong> CONG TY KATINAT</p>
+                        <p><strong>Nội dung:</strong> <span id="transferContent"></span></p>
+                    </div>
+                </div>
+
+                <div class="order-summary">
+                    <h4><i class="material-icons">receipt</i> Tóm tắt đơn hàng</h4>
+                    <div id="orderSummary"></div>
+                    <div class="final-total">Tổng thanh toán: <span id="finalTotal">0đ</span></div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary bg-gray-300 hover:bg-gray-400 text-gray-800" onclick="closeCheckout()">Hủy</button>
+                    <button type="submit" class="btn-primary">Xác nhận đặt hàng</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="mobile-functions.js"></script>
+    <script>
+        // Call store
+        function callStore(phone) {
+            window.location.href = `tel:${phone}`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thực đơn - Katinat</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="custom-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Fira Sans', 'Roboto', sans-serif !important;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .main-content {
+            flex: 1;
+            padding-bottom: 2rem;
+        }
+        .footer {
+            margin-top: auto;
+        }
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        .product-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+        .product-info {
+            padding: 1.5rem;
+        }
+        .product-info h4 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        .description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+        .price {
+            color: #E3C08D;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        .add-to-cart {
+            background: linear-gradient(135deg, #E3C08D, #D1A76F);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        .add-to-cart:hover {
+            background: linear-gradient(135deg, #D1A76F, #B8956A);
+            transform: translateY(-2px);
+        }
+        .category-btn {
+            background: #E3C08D;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0.25rem;
+        }
+        .category-btn:hover, .category-btn.active {
+            background: #D1A76F;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header bg-sky-950">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                        <img src="https://katinat.vn/wp-content/uploads/2023/12/cropped-Kat-Logo-fa-rgb-05__1_-removebg-preview.png" alt="Katinat">
+                </div>
+                <nav class="nav" id="mobileNav">
+                    <a href="index.html" class="nav-link text-white">
+                        <i class="material-icons">home</i>
+                        <span>Trang chủ</span>
+                    </a>
+                    <a href="about.html" class="nav-link text-white">
+                        <i class="material-icons">info</i>
+                        <span>Về chúng tôi</span>
+                    </a>
+                    <a href="menu.html" class="nav-link active text-white">
+                        <i class="material-icons">restaurant_menu</i>
+                        <span>Thực đơn</span>
+                    </a>
+                    <a href="stores.html" class="nav-link text-white">
+                        <i class="material-icons">store</i>
+                        <span>Cửa hàng</span>
+                    </a>
+                    <a href="news.html" class="nav-link text-white">
+                        <i class="material-icons">article</i>
+                        <span>Tin tức</span>
+                    </a>
+                </nav>
+                <div class="header-actions">
+                    <div class="search-box">
+                        <input type="text" placeholder="Tìm kiếm...">
+                        <button class="search-btn"><i class="material-icons">search</i></button>
+                    </div>
+                    <button class="search-toggle-btn text-white" onclick="toggleSearch()">
+                        <i class="material-icons">search</i>
+                    </button>
+                    <button class="cart-btn text-white" onclick="openCart()">
+                        <i class="material-icons">shopping_cart</i> 
+                        <span class="cart-count">0</span>
+                    </button>
+                </div>
+                <div class="mobile-controls">
+                    <button class="mobile-menu-btn text-white" onclick="toggleMobileMenu()">
+                        <i class="material-icons">menu</i>
+                    </button>
+                </div>
+            </div>
+            <div class="mobile-search" id="mobileSearch">
+                <input type="text" placeholder="Tìm kiếm sản phẩm...">
+                <button class="search-btn"><i class="material-icons">search</i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Sidebar Menu -->
+    <div id="sidebarOverlay" class="sidebar-overlay">
+        <div id="sidebarMenu" class="sidebar-menu">
+            <div class="sidebar-header">
+                <img src="https://katinat.vn/wp-content/uploads/2023/12/cropped-Kat-Logo-fa-rgb-05__1_-removebg-preview.png" alt="Katinat" class="sidebar-logo">
+                <button class="sidebar-close" onclick="closeSidebar()">
+                    <i class="material-icons">close</i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="sidebar-link" onclick="closeSidebar()">
+                    <i class="material-icons">home</i>
+                    <span>Trang chủ</span>
+                </a>
+                <a href="about.html" class="sidebar-link" onclick="closeSidebar()">
+                    <i class="material-icons">info</i>
+                    <span>Về chúng tôi</span>
+                </a>
+                <a href="menu.html" class="sidebar-link active" onclick="closeSidebar()">
+                    <i class="material-icons">restaurant_menu</i>
+                    <span>Thực đơn</span>
+                </a>
+                <a href="stores.html" class="sidebar-link" onclick="closeSidebar()">
+                    <i class="material-icons">store</i>
+                    <span>Cửa hàng</span>
+                </a>
+                <a href="news.html" class="sidebar-link" onclick="closeSidebar()">
+                    <i class="material-icons">article</i>
+                    <span>Tin tức</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Menu Page -->
+        <section class="menu-page bg-sky-50 py-12">
+            <div class="container max-w-6xl mx-auto px-4">
+                <h1 class="text-4xl font-bold text-center text-gray-800 mb-8">Thực đơn Katinat</h1>
+                
+                <!-- Menu Categories -->
+                <div class="text-center mb-12">
+                    <button class="category-btn active" onclick="showCategory('all')">Tất cả</button>
+                    <button class="category-btn" onclick="showCategory('tra-sua')">Trà sữa</button>
+                    <button class="category-btn" onclick="showCategory('ca-phe')">Cà phê</button>
+                    <button class="category-btn" onclick="showCategory('tra-trai-cay')">Trà trái cây</button>
+                    <button class="category-btn" onclick="showCategory('dac-biet')">Đặc biệt</button>
+                </div>
+
+                <!-- Product Grid -->
+                <div class="product-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Trà sữa -->
+                    <div class="product-card" data-category="tra-sua">
+                        <img src="img/iki matcha.jpg" alt="Iki Matcha Tàu Hủ">
+                        <div class="product-info">
+                            <h4>Iki Matcha Tàu Hủ</h4>
+                            <p class="description">Vị dịu nhẹ của matcha hòa quyện với tàu hủ mịn mượt</p>
+                            <p class="price">65.000đ</p>
+                            <button class="add-to-cart" onclick="openProductOptions('Iki Matcha Tàu Hủ', 65000, 'img/iki matcha.jpg')">Thêm vào giỏ</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card" data-category="tra-sua">
+                        <img src="img/Ba lá.png" alt="Ba Lá">
+                        <div class="product-info">
+                            <h4>Ba Lá</h4>
+                            <p class="description">Trà xanh đậm vị hòa quyện cùng hoa nhài tươi mát</p>
+                            <p class="price">55.000đ</p>
+                            <button class="add-to-cart" onclick="openProductOptions('Ba Lá', 55000, 'img/Ba lá.png')">Thêm vào giỏ</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card" data-category="tra-sua">
+                        <img src="img/Taro coc.jpg" alt="Taro Coco">
+                        <div class="product-info">
+                            <h4>Taro Coco</h4>
+                            <p class="description">Kết hợp khoai môn nghiền mịn, sữa dừa non ngọt thanh</p>
+                            <p class="price">58.000đ</p>
+                            <button class="add-to-cart" onclick="openProductOptions('Taro Coco', 58000, 'img/Taro coc.jpg')">Thêm vào giỏ</button>
+                        </div>
+                    </div>
+
+                    <!-- Cà phê -->
+                    <div class="product-card" data-category="ca-phe">
+                        <img src="img/Phin mê.jpg" alt="Cà Phê Phin Mê">
+                        <div class="product-info">
+                            <h4>Cà Phê Phin Mê</h4>
+                            <p class="description">Hương vị đậm đà của Robusta Buôn Mê Thuột</p>
+                            <p class="price">45.000đ</p>
+                            <button class="add-to-cart" onclick="openProductOptions('Cà Phê Phin Mê', 45000, 'img/Phin mê.jpg')">Thêm vào giỏ</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card" data-category="ca-phe">
+                        <img src="img/cf phô mai.jpg" alt="Cà phê phô mai">
+                        <div class="product-info">
+                            <h4>Cà phê phô mai</h4>
+                            <p class="description">Cà phê phin truyền thống với lớp phô mai mịn màng</p>
+                            <p class="price">52.000đ</p>
+                            <button class="add-to-cart" onclick="openProductOptions('Cà phê phô mai', 52000, 'img/cf phô mai.jpg')">Thêm vào giỏ</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card" data-category="ca-phe">
+                        <img src="img/Latte Hat phi.jpg" alt="Latte Hạt Phi">
+                        <div class="product-info">
+                            <h4>Latte Hạt Phi</h4>
+                            <p class="description">Espresso đậm đà kết hợp sữa tươi và hạt phi thơm</p>
+                            <p class="price">48.000đ</p>
+                            <button class="add-to-cart" onclick="openProductOptions('Latte Hạt Phi', 48000, 'img/Latte Hat phi.jpg')">Thêm vào giỏ</button>
+                        </div>
+                    </div>
+
+                    <!-- Trà trái cây -->
+                    <div class="product-card" data-category="tra-trai-cay">
+                        <img src="img/Peace.jpg" alt="Peace">
+                        <div class="product-info">
+                            <h4>Peace</h4>
+                            <p class="description">Trà trái cây tươi mát với hương vị hòa bình</p>
+                            <p class="price">42.000đ</p>
+                            <button class="add-to-cart" onclick="openProductOptions('Peace', 42000, 'img/Peace.jpg')">Thêm vào giỏ</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card" data-category="tra-trai-cay">
+                        <img src="img/Hồng đào.png" alt="Hồng Đào">
+                        <div class="product-info">
+                            <h4>Hồng Đào</h4>
+                            <p class="description">Vị chua ngọt tươi mát từ đào hồng</p>
+                            <p class="price">45.000đ</p>
+                            <button class="add-to-cart" onclick="openProductOptions('Hồng Đào', 45000, 'img/Hồng đào.png')">Thêm vào giỏ</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card" data-category="tra-trai-cay">
+                        <img src="img/Sawadee.jpg" alt="Sawadee">
+                        <div class="product-info">
+                            <h4>Sawadee</h4>
+                            <p class="description">Trà Thái Lan với hương vị đặc trưng</p>
+                            <p class="price">48.000đ</p>
+                            <button class="add-to-cart" onclick="openProductOptions('Sawadee', 48000, 'img/Sawadee.jpg')">Thêm vào giỏ</button>
+                        </div>
+                    </div>
+
+                    <!-- Đặc biệt -->
+                    <div class="product-card special-edition" data-category="dac-biet">
+                        <img src="img/camellia.jpg" alt="Thanh Hương Camellia">
+                        <div class="product-info">
+                            <h4>Thanh Hương Camellia <span class="limited-badge">Giới hạn</span></h4>
+                            <p class="description">Trà Oolong ủ đan xen lớp hoa Camellia thanh tao</p>
+                            <p class="price">75.000đ</p>
+                            <button class="add-to-cart" onclick="openProductOptions('Thanh Hương Camellia', 75000, 'img/camellia.jpg')">Thêm vào giỏ</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card special-edition" data-category="dac-biet">
+                        <img src="img/so ri.jpg" alt="Sơ Ri">
+                        <div class="product-info">
+                            <h4>Sơ Ri <span class="limited-badge">Đặc biệt</span></h4>
+                            <p class="description">Phiên bản đặc biệt với hương vị độc đáo</p>
+                            <p class="price">68.000đ</p>
+                            <button class="add-to-cart" onclick="openProductOptions('Sơ Ri', 68000, 'img/so ri.jpg')">Thêm vào giỏ</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card special-edition" data-category="dac-biet">
+                        <img src="img/Chocomint.jpg" alt="Chocomint">
+                        <div class="product-info">
+                            <h4>Chocomint <span class="limited-badge">Mùa hè</span></h4>
+                            <p class="description">Chocolate mint mát lạnh cho mùa hè</p>
+                            <p class="price">55.000đ</p>
+                            <button class="add-to-cart" onclick="openProductOptions('Chocomint', 55000, 'img/Chocomint.jpg')">Thêm vào giỏ</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer bg-gray-800 text-white py-8">
+        <div class="container">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Về Katinat</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-gray-300">Giới thiệu</a></li>
+                        <li><a href="#" class="hover:text-gray-300">Tuyển dụng</a></li>
+                        <li><a href="#" class="hover:text-gray-300">Liên hệ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Sản phẩm</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-gray-300">Trà sữa</a></li>
+                        <li><a href="#" class="hover:text-gray-300">Cà phê</a></li>
+                        <li><a href="#" class="hover:text-gray-300">Trà trái cây</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Hỗ trợ</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-gray-300">Chính sách</a></li>
+                        <li><a href="#" class="hover:text-gray-300">Điều khoản</a></li>
+                        <li><a href="#" class="hover:text-gray-300">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Liên hệ</h4>
+                    <p class="mb-2"><i class="material-icons align-middle mr-2">phone</i> 1900 6969</p>
+                    <p class="mb-4"><i class="material-icons align-middle mr-2">email</i> info@katinat.vn</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="hover:text-gray-300"><i class="material-icons">facebook</i></a>
+                        <a href="#" class="hover:text-gray-300"><i class="material-icons">camera_alt</i></a>
+                        <a href="#" class="hover:text-gray-300"><i class="material-icons">alternate_email</i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="material-icons">shopping_cart</i> Giỏ hàng</h3>
+                <span class="close" onclick="closeCart()">&times;</span>
+            </div>
+            <div class="cart-items" id="cartItems"></div>
+            <div class="cart-total">
+                <div class="promo-section" style="margin-bottom: 1rem;">
+                    <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                        <input type="text" id="promoInput" placeholder="Nhập mã giảm giá" style="flex: 1; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+                        <button onclick="applyPromo()" style="background: #E3C08D; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">Áp dụng</button>
+                    </div>
+                    <div id="promoMessage" style="font-size: 0.9rem; color: #27ae60; display: none;"></div>
+                </div>
+                <div class="total-price">Tổng cộng: <span id="totalPrice">0đ</span></div>
+                <div id="discountAmount" style="color: #27ae60; font-weight: 600; margin: 0.5rem 0; display: none;"></div>
+                <div id="finalTotal" style="font-size: 1.4rem; font-weight: 700; color: #2c3e50;">Thành tiền: <span id="finalPrice">0đ</span></div>
+                <button class="checkout-btn" onclick="openCheckout()">Thanh toán</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Options Modal -->
+    <div id="productOptionsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="material-icons">local_cafe</i> <span id="productOptionsTitle">Tùy chọn sản phẩm</span></h3>
+                <span class="close" onclick="closeProductOptions()">&times;</span>
+            </div>
+            <div class="product-options-content">
+                <div class="product-options-image-container">
+                    <img id="productOptionsImage" src="" alt="Sản phẩm" class="product-options-image">
+                </div>
+                
+                <div class="options-section">
+                    <h4>Chọn loại ly</h4>
+                    <div class="options-group">
+                        <label class="option-item">
+                            <input type="radio" name="size" value="S" checked>
+                            <span class="option-label">Ly thường (S)</span>
+                            <span class="option-price">+0đ</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="size" value="M">
+                            <span class="option-label">Ly lớn (M)</span>
+                            <span class="option-price">+10.000đ</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="size" value="L">
+                            <span class="option-label">Ly đặc biệt (L)</span>
+                            <span class="option-price">+15.000đ</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="options-section">
+                    <h4>Lượng đá</h4>
+                    <div class="options-group">
+                        <label class="option-item">
+                            <input type="radio" name="ice" value="100" checked>
+                            <span class="option-label">100% đá</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="ice" value="70">
+                            <span class="option-label">70% đá</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="ice" value="50">
+                            <span class="option-label">50% đá</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="ice" value="30">
+                            <span class="option-label">30% đá</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="ice" value="0">
+                            <span class="option-label">Không đá</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="options-section">
+                    <h4>Lượng đường</h4>
+                    <div class="options-group">
+                        <label class="option-item">
+                            <input type="radio" name="sugar" value="100" checked>
+                            <span class="option-label">100% đường</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="sugar" value="70">
+                            <span class="option-label">70% đường</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="sugar" value="50">
+                            <span class="option-label">50% đường</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="sugar" value="30">
+                            <span class="option-label">30% đường</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="sugar" value="0">
+                            <span class="option-label">Không đường</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="options-section">
+                    <h4>Topping</h4>
+                    <div class="options-group">
+                        <label class="option-item">
+                            <input type="checkbox" name="topping" value="tran-chau-den">
+                            <span class="option-label">Trân châu đen</span>
+                            <span class="option-price">+10.000đ</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox" name="topping" value="tran-chau-trang">
+                            <span class="option-label">Trân châu trắng</span>
+                            <span class="option-price">+10.000đ</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox" name="topping" value="thach-tra-xanh">
+                            <span class="option-label">Thạch trà xanh</span>
+                            <span class="option-price">+8.000đ</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox" name="topping" value="pudding">
+                            <span class="option-label">Pudding</span>
+                            <span class="option-price">+8.000đ</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox" name="topping" value="kem-pho-mai">
+                            <span class="option-label">Kem phô mai</span>
+                            <span class="option-price">+15.000đ</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="product-options-footer">
+                    <div class="quantity-control">
+                        <button type="button" class="qty-btn" onclick="decreaseQuantity()">-</button>
+                        <input type="number" id="productQuantity" value="1" min="1" max="10">
+                        <button type="button" class="qty-btn" onclick="increaseQuantity()">+</button>
+                    </div>
+                    <div class="product-total">
+                        <span>Tổng: </span>
+                        <span id="productTotalPrice">65.000đ</span>
+                    </div>
+                    <button class="add-to-cart-btn w-full" onclick="addToCartWithOptions()">Thêm vào giỏ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="material-icons">payment</i> Thanh toán</h3>
+                <span class="close" onclick="closeCheckout()">&times;</span>
+            </div>
+            <div class="checkout-content">
+                <div class="checkout-section">
+                    <h4><i class="material-icons">person</i> Thông tin khách hàng</h4>
+                    <div class="form-group">
+                        <input type="text" id="customerName" placeholder="Họ và tên *" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="customerPhone" placeholder="Số điện thoại *" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="customerEmail" placeholder="Email (tùy chọn)">
+                    </div>
+                </div>
+                
+                <div class="checkout-section">
+                    <h4><i class="material-icons">location_on</i> Địa chỉ giao hàng</h4>
+                    <div class="form-group">
+                        <input type="text" id="deliveryAddress" placeholder="Địa chỉ chi tiết *" required>
+                    </div>
+                    <div class="form-group">
+                        <select id="deliveryDistrict" required>
+                            <option value="">Chọn quận/huyện *</option>
+                            <option value="quan1">Quận 1</option>
+                            <option value="quan3">Quận 3</option>
+                            <option value="quan5">Quận 5</option>
+                            <option value="quan7">Quận 7</option>
+                            <option value="quan10">Quận 10</option>
+                            <option value="binhtan">Bình Tân</option>
+                            <option value="tanbinh">Tân Bình</option>
+                            <option value="tanphu">Tân Phú</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="deliveryNote" placeholder="Ghi chú giao hàng (tùy chọn)" rows="3"></textarea>
+                    </div>
+                </div>
+                
+                <div class="checkout-section">
+                    <h4><i class="material-icons">schedule</i> Thời gian giao hàng</h4>
+                    <div class="delivery-time-options">
+                        <label class="delivery-option">
+                            <input type="radio" name="deliveryTime" value="now" checked>
+                            <span>Giao ngay (15-30 phút)</span>
+                        </label>
+                        <label class="delivery-option">
+                            <input type="radio" name="deliveryTime" value="schedule">
+                            <span>Đặt lịch giao hàng</span>
+                        </label>
+                    </div>
+                    <div id="scheduleTime" class="schedule-time" style="display: none;">
+                        <input type="datetime-local" id="scheduledDateTime" min="">
+                    </div>
+                </div>
+                
+                <div class="checkout-section">
+                    <h4><i class="material-icons">payment</i> Phương thức thanh toán</h4>
+                    <div class="payment-methods">
+                        <label class="payment-method">
+                            <input type="radio" name="paymentMethod" value="cod" checked>
+                            <i class="material-icons">money</i>
+                            <span>Thanh toán khi nhận hàng (COD)</span>
+                        </label>
+                        <label class="payment-method">
+                            <input type="radio" name="paymentMethod" value="momo">
+                            <img src="https://developers.momo.vn/v3/assets/images/square-logo.svg" alt="MoMo" style="width: 24px; height: 24px;">
+                            <span>Ví MoMo</span>
+                        </label>
+                        <label class="payment-method">
+                            <input type="radio" name="paymentMethod" value="banking">
+                            <i class="material-icons">account_balance</i>
+                            <span>Chuyển khoản ngân hàng</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="checkout-summary">
+                    <div class="summary-row">
+                        <span>Tạm tính:</span>
+                        <span id="checkoutSubtotal">0đ</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Phí giao hàng:</span>
+                        <span id="deliveryFee">15.000đ</span>
+                    </div>
+                    <div class="summary-row discount-row" id="checkoutDiscountRow" style="display: none;">
+                        <span>Giảm giá:</span>
+                        <span id="checkoutDiscount">-0đ</span>
+                    </div>
+                    <div class="summary-row total-row">
+                        <span>Tổng cộng:</span>
+                        <span id="checkoutTotal">15.000đ</span>
+                    </div>
+                </div>
+                
+                <div class="checkout-actions">
+                    <button class="btn-secondary" onclick="closeCheckout()">Quay lại</button>
+                    <button class="btn-primary" onclick="processOrder()">Đặt hàng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 bg-black/70 z-50 hidden items-center justify-center backdrop-blur-sm">
+        <div class="bg-gradient-to-br from-sky-50 to-white rounded-2xl max-w-sm mx-4 overflow-hidden shadow-2xl transform transition-all border-4 border-green-400" style="box-shadow: 0 0 30px #22c55e, 0 0 60px #22c55e;">
+            <div class="bg-gradient-to-r from-green-500 to-green-600 p-6 text-center relative overflow-hidden">
+                <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg relative z-10">
+                    <i class="material-icons text-green-500 text-4xl animate-bounce">check_circle</i>
+                </div>
+                <h2 class="text-white text-2xl font-bold mb-2 relative z-10 drop-shadow-lg">ĐẶT HÀNG THÀNH CÔNG!</h2>
+                <p class="text-green-100 relative z-10 font-semibold">Cảm ơn bạn đã đặt hàng tại Katinat</p>
+            </div>
+            <div class="p-6 text-center bg-gradient-to-b from-sky-50 to-white">
+                <div class="mb-4">
+                    <p class="text-sky-800 mb-3 font-semibold">Đơn hàng của bạn đang được chuẩn bị</p>
+                    <div class="bg-gradient-to-r from-sky-100 to-sky-200 rounded-lg p-4 mb-3 border-2 border-sky-300">
+                        <p class="text-sky-800 font-bold flex items-center justify-center gap-2">
+                            <i class="material-icons text-sky-600">schedule</i>
+                            Thời gian nhận hàng dự kiến
+                        </p>
+                        <p class="text-sky-900 text-xl font-bold">15-20 phút</p>
+                    </div>
+                </div>
+                <button onclick="closeSuccessModal()" class="w-full bg-[#E3C08D] hover:bg-[#D1A76F] text-white py-3 px-4 rounded-lg transition-all font-bold shadow-lg hover:shadow-xl transform hover:scale-105">
+                    <i class="material-icons mr-2">thumb_up</i>
+                    Hoàn tất
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="mobile-functions.js"></script>
+    <script src="menu-sync.js"></script>
+    <script>
+        function showCategory(category) {
+            const cards = document.querySelectorAll('.product-card');
+            const buttons = document.querySelectorAll('.category-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            if (category === 'all') {
+                cards.forEach(card => card.style.display = 'block');
+            } else {
+                cards.forEach(card => {
+                    if (card.dataset.category === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

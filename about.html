@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Về Katinat - Câu chuyện thương hiệu</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="custom-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .btn-primary, .checkout-btn, .search-btn, .add-to-cart, .direction-btn, .call-btn,
+        .use-promo-btn, .read-more-btn, .load-more-btn, .category-btn, .add-to-cart-btn {
+            background-color: #E3C08D !important;
+            color: white !important;
+        }
+        .btn-primary:hover, .checkout-btn:hover, .search-btn:hover, .add-to-cart:hover,
+        .direction-btn:hover, .call-btn:hover, .use-promo-btn:hover, .read-more-btn:hover,
+        .load-more-btn:hover, .category-btn:hover, .add-to-cart-btn:hover {
+            background-color: #D1A76F !important;
+        }
+        .category-btn.active {
+            background-color: #D1A76F !important;
+        }
+        @media (max-width: 767px) {
+            .header {
+                position: relative !important;
+            }
+            .header-content {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                padding: 1rem !important;
+                gap: 1rem !important;
+            }
+            .logo {
+                order: 1 !important;
+            }
+            .nav {
+                display: none !important;
+            }
+            .nav.show {
+                display: flex !important;
+                position: fixed !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                background: linear-gradient(135deg, #0c4a6e 0%, #075985 100%) !important;
+                padding: 0.8rem 0.5rem !important;
+                justify-content: space-around !important;
+                z-index: 100 !important;
+                border-top-left-radius: 20px !important;
+                border-top-right-radius: 20px !important;
+                box-shadow: 0 -4px 20px rgba(0,0,0,0.15) !important;
+            }
+            body {
+                padding-bottom: 70px !important;
+            }
+            .nav.show .nav-link {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                padding: 0.8rem !important;
+                border-radius: 12px !important;
+                min-width: 48px !important;
+                flex: 1 !important;
+                max-width: 60px !important;
+            }
+            .nav.show .nav-link i {
+                display: block !important;
+                font-size: 1.8rem !important;
+            }
+            .nav.show .nav-link span {
+                display: none !important;
+            }
+            .header-actions {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                gap: 1rem !important;
+                order: 2 !important;
+            }
+            .mobile-controls {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                order: 2 !important;
+            }
+            .mobile-menu-btn, .search-toggle-btn, .cart-btn {
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                padding: 0.6rem !important;
+                border-radius: 12px !important;
+                background: rgba(255, 255, 255, 0.1) !important;
+                border: 2px solid rgba(255, 255, 255, 0.2) !important;
+                min-width: 48px !important;
+                min-height: 48px !important;
+            }
+            .search-box {
+                display: none !important;
+            }
+        }
+        .achievement-number {
+            color: #E3C08D !important;
+        }
+        .section-title, h3 {
+            color: #D1A76F !important;
+        }
+        .value-card i {
+            color: #E3C08D !important;
+        }
+        body {
+            font-family: 'Fira Sans', 'Roboto', sans-serif !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header bg-sky-950">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://katinat.vn/wp-content/uploads/2023/12/cropped-Kat-Logo-fa-rgb-05__1_-removebg-preview.png" alt="Katinat">
+                </div>
+                <nav class="nav" id="mobileNav">
+                    <a href="index.html" class="nav-link text-white" onclick="toggleMobileMenu()">
+                        <i class="material-icons">home</i>
+                        <span>Trang chủ</span>
+                    </a>
+                    <a href="about.html" class="nav-link active text-white" onclick="toggleMobileMenu()">
+                        <i class="material-icons">info</i>
+                        <span>Về chúng tôi</span>
+                    </a>
+                    <a href="menu.html" class="nav-link text-white" onclick="toggleMobileMenu()">
+                        <i class="material-icons">restaurant_menu</i>
+                        <span>Thực đơn</span>
+                    </a>
+                    <a href="stores.html" class="nav-link text-white" onclick="toggleMobileMenu()">
+                        <i class="material-icons">store</i>
+                        <span>Cửa hàng</span>
+                    </a>
+                    <a href="news.html" class="nav-link text-white" onclick="toggleMobileMenu()">
+                        <i class="material-icons">article</i>
+                        <span>Tin tức</span>
+                    </a>
+                </nav>
+                <div class="header-actions">
+                    <div class="search-box">
+                        <input type="text" placeholder="Tìm kiếm...">
+                        <button class="search-btn"><i class="material-icons">search</i></button>
+                    </div>
+                    <button class="search-toggle-btn text-white" onclick="toggleSearch()">
+                        <i class="material-icons">search</i>
+                    </button>
+                    <button class="cart-btn text-white" onclick="openCart()">
+                        <i class="material-icons">shopping_cart</i> 
+                        <span class="cart-count">0</span>
+                    </button>
+                </div>
+                <div class="mobile-controls">
+                    <button class="mobile-menu-btn text-white" onclick="toggleMobileMenu()">
+                        <i class="material-icons">menu</i>
+                    </button>
+                </div>
+            </div>
+            <div class="mobile-search" id="mobileSearch">
+                <input type="text" placeholder="Tìm kiếm sản phẩm...">
+                <button class="search-btn"><i class="material-icons">search</i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Sidebar Menu -->
+    <div id="sidebarOverlay" class="sidebar-overlay">
+        <div id="sidebarMenu" class="sidebar-menu">
+            <div class="sidebar-header">
+                <img src="https://katinat.vn/wp-content/uploads/2023/12/cropped-Kat-Logo-fa-rgb-05__1_-removebg-preview.png" alt="Katinat" class="sidebar-logo">
+                <button class="sidebar-close" onclick="closeSidebar()">
+                    <i class="material-icons">close</i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="sidebar-link" onclick="closeSidebar()">
+                    <i class="material-icons">home</i>
+                    <span>Trang chủ</span>
+                </a>
+                <a href="about.html" class="sidebar-link active" onclick="closeSidebar()">
+                    <i class="material-icons">info</i>
+                    <span>Về chúng tôi</span>
+                </a>
+                <a href="menu.html" class="sidebar-link" onclick="closeSidebar()">
+                    <i class="material-icons">restaurant_menu</i>
+                    <span>Thực đơn</span>
+                </a>
+                <a href="stores.html" class="sidebar-link" onclick="closeSidebar()">
+                    <i class="material-icons">store</i>
+                    <span>Cửa hàng</span>
+                </a>
+                <a href="news.html" class="sidebar-link" onclick="closeSidebar()">
+                    <i class="material-icons">article</i>
+                    <span>Tin tức</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- About Page -->
+    <section class="about-page bg-[#F9F3E9]">
+        <div class="container">
+            <h1 class="page-title animate__animated animate__fadeInDown">Về Katinat</h1>
+            
+            <!-- Hero About -->
+            <div class="about-hero animate__animated animate__fadeIn">
+                <img src="img/về.jpg" alt="Về Katinat">
+                <div class="hero-overlay animate__animated animate__fadeInUp animate__delay-1s">
+                    <h2>KATINAT SAIGON KAFE</h2>
+                    <p>Thương hiệu trà sữa và cà phê hàng đầu Việt Nam</p>
+                </div>
+            </div>
+
+            <!-- Story Section -->
+            <div class="story-section">
+                <div class="story-grid">
+                    <div class="story-text animate__animated animate__fadeInLeft">
+                        <h3><strong>Câu chuyện thương hiệu</strong></h3>
+                        <p>Katinat Saigon Kafe được thành lập vào năm 2008 tại Thành phố Hồ Chí Minh với sứ mệnh mang đến cho người Việt Nam những trải nghiệm đồ uống đẳng cấp quốc tế.</p>
+                        <p>Với hơn 15 năm phát triển, Katinat đã trở thành một trong những thương hiệu trà sữa và cà phê hàng đầu tại Việt Nam với hơn 50 cửa hàng trên toàn quốc.</p>
+                    </div>
+                    <div class="story-text">
+                        <h3><strong>Cam kết chất lượng</strong></h3>
+                        <p>Tại Katinat, chúng tôi luôn đặt chất lượng lên hàng đầu. Mỗi sản phẩm đều được lựa chọn kỹ lưỡng từ nguyên liệu đến quy trình chế biến.</p>
+                        <p>Đội ngũ barista chuyên nghiệp của chúng tôi được đào tạo bài bản và đam mê, luôn sẵn sàng mang đến cho quý khách hàng những ly đồ uống hoàn hảo nhất.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Values Section -->
+            <div class="values-section">
+                <h3 class="section-title">Giá trị cốt lõi</h3>
+                <div class="values-grid">
+                    <div class="value-card animate__animated animate__fadeInUp animate__delay-1s hover:animate__pulse">
+                        <i class="material-icons">favorite</i>
+                        <h4>Tình yêu</h4>
+                        <p>Tình yêu với nghề và khách hàng là động lực để chúng tôi không ngừng cải tiến</p>
+                    </div>
+                    <div class="value-card animate__animated animate__fadeInUp animate__delay-2s hover:animate__pulse">
+                        <i class="material-icons">star</i>
+                        <h4>Chất lượng</h4>
+                        <p>Cam kết mang đến sản phẩm chất lượng cao với nguyên liệu tươi ngon nhất</p>
+                    </div>
+                    <div class="value-card animate__animated animate__fadeInUp animate__delay-3s hover:animate__pulse">
+                        <i class="material-icons">people</i>
+                        <h4>Cộng đồng</h4>
+                        <p>Xây dựng cộng đồng yêu thương và chia sẻ những giá trị tích cực</p>
+                    </div>
+                    <div class="value-card animate__animated animate__fadeInUp animate__delay-4s hover:animate__pulse">
+                        <i class="material-icons">eco</i>
+                        <h4>Bền vững</h4>
+                        <p>Phát triển bền vững và bảo vệ môi trường cho thế hệ tương lai</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Achievements -->
+            <div class="achievements-section">
+                <h3 class="section-title">Thành tựu đạt được</h3>
+                <div class="achievements-grid">
+                    <div class="achievement-item">
+                        <div class="achievement-number">50+</div>
+                        <p>Cửa hàng trên toàn quốc</p>
+                    </div>
+                    <div class="achievement-item">
+                        <div class="achievement-number">1M+</div>
+                        <p>Khách hàng tin yêu</p>
+                    </div>
+                    <div class="achievement-item">
+                        <div class="achievement-number">100+</div>
+                        <p>Sản phẩm đa dạng</p>
+                    </div>
+                    <div class="achievement-item">
+                        <div class="achievement-number">15+</div>
+                        <p>Năm phát triển</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Về Katinat</h4>
+                    <ul>
+                        <li><a href="about.html">Giới thiệu</a></li>
+                        <li><a href="#">Tuyển dụng</a></li>
+                        <li><a href="#">Liên hệ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Sản phẩm</h4>
+                    <ul>
+                        <li><a href="#">Trà sữa</a></li>
+                        <li><a href="#">Cà phê</a></li>
+                        <li><a href="#">Trá trái cây</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Hỗ trợ</h4>
+                    <ul>
+                        <li><a href="#">Chính sách</a></li>
+                        <li><a href="#">Điều khoản</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Liên hệ</h4>
+                    <p><i class="material-icons">phone</i> 1900 6969</p>
+                    <p><i class="material-icons">email</i> info@katinat.vn</p>
+                    <div class="social-links">
+                        <a href="#"><i class="material-icons">facebook</i></a>
+                        <a href="#"><i class="material-icons">camera_alt</i></a>
+                        <a href="#"><i class="material-icons">alternate_email</i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="material-icons">shopping_cart</i> Giỏ hàng</h3>
+                <span class="close" onclick="closeCart()">&times;</span>
+            </div>
+            <div class="cart-items" id="cartItems">
+                <!-- Cart items will be populated here -->
+            </div>
+            <div class="cart-total">
+                <div class="total-price">Tổng cộng: <span id="totalPrice">0đ</span></div>
+                <button class="checkout-btn" onclick="openCheckout()">Thanh toán</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Product Options Modal -->
+    <div id="productOptionsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="material-icons">local_cafe</i> <span id="productOptionsTitle">Tùy chọn sản phẩm</span></h3>
+                <span class="close" onclick="closeProductOptions()">&times;</span>
+            </div>
+            <div class="product-options-content">
+                <div class="product-options-image-container">
+                    <img id="productOptionsImage" src="" alt="Sản phẩm" class="product-options-image">
+                </div>
+                
+                <!-- Size Options -->
+                <div class="options-section">
+                    <h4>Chọn loại ly</h4>
+                    <div class="options-group">
+                        <label class="option-item">
+                            <input type="radio" name="size" value="S" checked>
+                            <span class="option-label">Ly thường (S)</span>
+                            <span class="option-price">+0đ</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="size" value="M">
+                            <span class="option-label">Ly lớn (M)</span>
+                            <span class="option-price">+10.000đ</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="size" value="L">
+                            <span class="option-label">Ly đặc biệt (L)</span>
+                            <span class="option-price">+15.000đ</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="size" value="special">
+                            <span class="option-label">Ly chương trình tháng</span>
+                            <span class="option-price">+25.000đ</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Ice Options -->
+                <div class="options-section">
+                    <h4>Lượng đá</h4>
+                    <div class="options-group">
+                        <label class="option-item">
+                            <input type="radio" name="ice" value="100" checked>
+                            <span class="option-label">100% đá</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="ice" value="70">
+                            <span class="option-label">70% đá</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="ice" value="50">
+                            <span class="option-label">50% đá</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="ice" value="30">
+                            <span class="option-label">30% đá</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="ice" value="0">
+                            <span class="option-label">Không đá</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Sugar Options -->
+                <div class="options-section">
+                    <h4>Lượng đường</h4>
+                    <div class="options-group">
+                        <label class="option-item">
+                            <input type="radio" name="sugar" value="100" checked>
+                            <span class="option-label">100% đường</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="sugar" value="70">
+                            <span class="option-label">70% đường</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="sugar" value="50">
+                            <span class="option-label">50% đường</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="sugar" value="30">
+                            <span class="option-label">30% đường</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="sugar" value="0">
+                            <span class="option-label">Không đường</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Toppings -->
+                <div class="options-section">
+                    <h4>Topping</h4>
+                    <div class="options-group">
+                        <label class="option-item">
+                            <input type="checkbox" name="topping" value="tran-chau-den">
+                            <span class="option-label">Trân châu đen</span>
+                            <span class="option-price">+10.000đ</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox" name="topping" value="tran-chau-trang">
+                            <span class="option-label">Trân châu trắng</span>
+                            <span class="option-price">+10.000đ</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox" name="topping" value="thach-tra-xanh">
+                            <span class="option-label">Thạch trà xanh</span>
+                            <span class="option-price">+8.000đ</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox" name="topping" value="pudding">
+                            <span class="option-label">Pudding</span>
+                            <span class="option-price">+8.000đ</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox" name="topping" value="kem-pho-mai">
+                            <span class="option-label">Kem phô mai</span>
+                            <span class="option-price">+15.000đ</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Quantity and Add to Cart -->
+                <div class="product-options-footer">
+                    <div class="quantity-control">
+                        <button type="button" class="qty-btn" onclick="decreaseQuantity()">-</button>
+                        <input type="number" id="productQuantity" value="1" min="1" max="10">
+                        <button type="button" class="qty-btn" onclick="increaseQuantity()">+</button>
+                    </div>
+                    <div class="product-total">
+                        <span>Tổng: </span>
+                        <span id="productTotalPrice">65.000đ</span>
+                    </div>
+                    <button class="add-to-cart-btn w-full" onclick="addToCartWithOptions()">Thêm vào giỏ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="material-icons">payment</i> Thông tin thanh toán</h3>
+                <span class="close" onclick="closeCheckout()">&times;</span>
+            </div>
+            <form id="checkoutForm" class="checkout-form">
+                <div class="form-section">
+                    <h4><i class="material-icons">person</i> Thông tin khách hàng</h4>
+                    <div class="form-group">
+                        <input type="text" id="customerName" placeholder="Họ và tên" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="customerPhone" placeholder="Số điện thoại" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="customerEmail" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <textarea id="customerAddress" placeholder="Địa chỉ giao hàng" rows="3"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h4><i class="material-icons">credit_card</i> Phương thức thanh toán</h4>
+                    <div class="payment-methods">
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="cash" checked>
+                            <span><i class="material-icons">money</i> Tiền mặt</span>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="bank">
+                            <span><i class="material-icons">account_balance</i> Chuyển khoản ngân hàng</span>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="momo">
+                            <span><i class="material-icons">phone_android</i> Ví MoMo</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="bankInfo" class="bank-info" style="display: none;">
+                    <h4><i class="material-icons">account_balance</i> Thông tin chuyển khoản</h4>
+                    <div class="bank-details">
+                        <p><strong>Ngân hàng:</strong> Vietcombank</p>
+                        <p><strong>Số tài khoản:</strong> 1234567890</p>
+                        <p><strong>Chủ tài khoản:</strong> CONG TY KATINAT</p>
+                        <p><strong>Nội dung:</strong> <span id="transferContent"></span></p>
+                    </div>
+                </div>
+
+                <div class="order-summary">
+                    <h4><i class="material-icons">receipt</i> Tóm tắt đơn hàng</h4>
+                    <div id="orderSummary"></div>
+                    <div class="final-total">Tổng thanh toán: <span id="finalTotal">0đ</span></div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary bg-gray-300 hover:bg-gray-400 text-gray-800" onclick="closeCheckout()">Hủy</button>
+                    <button type="submit" class="btn-primary">Xác nhận đặt hàng</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="mobile-functions.js"></script>
+</body>
+</html>

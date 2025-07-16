@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tin tức - Katinat</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="custom-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .btn-primary, .checkout-btn, .search-btn, .add-to-cart, .direction-btn, .call-btn,
+        .use-promo-btn, .read-more-btn, .load-more-btn, .category-btn, .add-to-cart-btn {
+            background-color: #E3C08D !important;
+            color: white !important;
+        }
+        .btn-primary:hover, .checkout-btn:hover, .search-btn:hover, .add-to-cart:hover,
+        .direction-btn:hover, .call-btn:hover, .use-promo-btn:hover, .read-more-btn:hover,
+        .load-more-btn:hover, .category-btn:hover, .add-to-cart-btn:hover {
+            background-color: #D1A76F !important;
+        }
+        .news-category {
+            background-color: #E3C08D !important;
+        }
+        body {
+            font-family: 'Fira Sans', 'Roboto', sans-serif !important;
+        }
+        .news-card img {
+            width: 100% !important;
+            height: 250px !important;
+            object-fit: cover !important;
+            object-position: center !important;
+            border-radius: 8px !important;
+        }
+        .featured-article img {
+            width: 100% !important;
+            height: 400px !important;
+            object-fit: cover !important;
+            object-position: center !important;
+            border-radius: 12px !important;
+        }
+        .featured-content {
+            background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(0,0,0,0.5)) !important;
+            backdrop-filter: blur(2px) !important;
+            padding: 3rem !important;
+            border-radius: 15px !important;
+        }
+        .featured-content h2 {
+            font-size: 2.5rem !important;
+            font-weight: 800 !important;
+            color: #D1A76F !important;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8) !important;
+            margin-bottom: 1.5rem !important;
+            line-height: 1.2 !important;
+        }
+        .featured-content .news-excerpt {
+            font-size: 1.2rem !important;
+            font-weight: 500 !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.7) !important;
+            margin-bottom: 2rem !important;
+            line-height: 1.6 !important;
+        }
+        .featured-content .news-category {
+            background: rgba(227, 192, 141, 0.9) !important;
+            padding: 0.6rem 1.2rem !important;
+            font-size: 1rem !important;
+            font-weight: 700 !important;
+            text-shadow: none !important;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+        }
+        .featured-content .news-meta {
+            margin-bottom: 2rem !important;
+        }
+        .featured-content .news-meta span {
+            font-size: 1rem !important;
+            font-weight: 600 !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.7) !important;
+        }
+        .featured-content .read-more-btn {
+            padding: 1rem 2.5rem !important;
+            font-size: 1.1rem !important;
+            font-weight: 700 !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+        }
+        .featured-article {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+        .featured-article img {
+            display: block !important;
+            margin: 0 auto !important;
+            object-position: center center !important;
+        }
+        .news-card img {
+            display: block !important;
+            margin: 0 auto !important;
+            object-position: center center !important;
+        }
+        /* Responsive Grid Layout */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+        /* Desktop to Mobile Responsive */
+        @media (max-width: 1200px) {
+            .news-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .news-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+            .featured-article { flex-direction: column; }
+            .featured-content h2 { font-size: 2rem !important; }
+            .featured-content .news-excerpt { font-size: 1rem !important; }
+            .page-title { font-size: 2rem; }
+        }
+        @media (max-width: 480px) {
+            .news-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .featured-content { padding: 2rem !important; }
+            .featured-content h2 { font-size: 1.5rem !important; }
+            .featured-content .news-excerpt { font-size: 0.9rem !important; }
+            .page-title { font-size: 1.5rem; }
+        }
+        /* Mobile Header Layout */
+        @media (max-width: 768px) {
+            .header-content {
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                padding: 1rem 0 !important;
+                flex-wrap: nowrap !important;
+            }
+            .logo {
+                flex: 0 0 auto !important;
+                height: 60px !important;
+            }
+            .nav {
+                display: none !important;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: #0c4a6e;
+                padding: 1rem;
+                z-index: 1000;
+            }
+            .nav.show {
+                display: flex !important;
+                justify-content: space-around !important;
+            }
+            .nav-link span { display: none; }
+            .nav-link i { font-size: 1.5rem; }
+            .header-actions {
+                display: flex !important;
+                align-items: center !important;
+                gap: 0.5rem !important;
+                flex: 0 0 auto !important;
+            }
+            .search-box { display: none !important; }
+            .mobile-menu-btn,
+            .search-toggle-btn,
+            .cart-btn {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                width: 40px !important;
+                height: 40px !important;
+                border-radius: 8px !important;
+                background: rgba(255,255,255,0.1) !important;
+                border: none !important;
+            }
+        }
+        @media (min-width: 769px) {
+            .mobile-menu-btn { display: none !important; }
+            .nav { display: flex !important; }
+            .nav-link i { display: none; }
+            .search-toggle-btn { display: none !important; }
+            .search-box { display: flex !important; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header bg-sky-950">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://katinat.vn/wp-content/uploads/2023/12/cropped-Kat-Logo-fa-rgb-05__1_-removebg-preview.png" alt="Katinat">
+                </div>
+                <nav class="nav" id="mobileNav">
+                    <a href="index.html" class="nav-link text-white" onclick="toggleMobileMenu()">
+                        <i class="material-icons">home</i>
+                        <span>Trang chủ</span>
+                    </a>
+                    <a href="about.html" class="nav-link text-white" onclick="toggleMobileMenu()">
+                        <i class="material-icons">info</i>
+                        <span>Về chúng tôi</span>
+                    </a>
+                    <a href="menu.html" class="nav-link text-white" onclick="toggleMobileMenu()">
+                        <i class="material-icons">restaurant_menu</i>
+                        <span>Thực đơn</span>
+                    </a>
+                    <a href="stores.html" class="nav-link text-white" onclick="toggleMobileMenu()">
+                        <i class="material-icons">store</i>
+                        <span>Cửa hàng</span>
+                    </a>
+                    <a href="news.html" class="nav-link active text-white" onclick="toggleMobileMenu()">
+                        <i class="material-icons">article</i>
+                        <span>Tin tức</span>
+                    </a>
+                </nav>
+                <div class="header-actions">
+                    <div class="search-box">
+                        <input type="text" placeholder="Tìm kiếm...">
+                        <button class="search-btn"><i class="material-icons">search</i></button>
+                    </div>
+                    <button class="search-toggle-btn text-white" onclick="toggleSearch()">
+                        <i class="material-icons">search</i>
+                    </button>
+                    <button class="cart-btn text-white" onclick="openCart()">
+                        <i class="material-icons">shopping_cart</i> 
+                        <span class="cart-count">0</span>
+                    </button>
+                </div>
+                <div class="mobile-controls">
+                    <button class="mobile-menu-btn text-white" onclick="toggleMobileMenu()">
+                        <i class="material-icons">menu</i>
+                    </button>
+                </div>
+            </div>
+            <div class="mobile-search" id="mobileSearch">
+                <input type="text" placeholder="Tìm kiếm sản phẩm...">
+                <button class="search-btn"><i class="material-icons">search</i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Sidebar Menu -->
+    <div id="sidebarOverlay" class="sidebar-overlay">
+        <div id="sidebarMenu" class="sidebar-menu">
+            <div class="sidebar-header">
+                <img src="https://katinat.vn/wp-content/uploads/2023/12/cropped-Kat-Logo-fa-rgb-05__1_-removebg-preview.png" alt="Katinat" class="sidebar-logo">
+                <button class="sidebar-close" onclick="closeSidebar()">
+                    <i class="material-icons">close</i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="sidebar-link" onclick="closeSidebar()">
+                    <i class="material-icons">home</i>
+                    <span>Trang chủ</span>
+                </a>
+                <a href="about.html" class="sidebar-link" onclick="closeSidebar()">
+                    <i class="material-icons">info</i>
+                    <span>Về chúng tôi</span>
+                </a>
+                <a href="menu.html" class="sidebar-link" onclick="closeSidebar()">
+                    <i class="material-icons">restaurant_menu</i>
+                    <span>Thực đơn</span>
+                </a>
+                <a href="stores.html" class="sidebar-link" onclick="closeSidebar()">
+                    <i class="material-icons">store</i>
+                    <span>Cửa hàng</span>
+                </a>
+                <a href="news.html" class="sidebar-link active" onclick="closeSidebar()">
+                    <i class="material-icons">article</i>
+                    <span>Tin tức</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- News Page -->
+    <section class="news-page bg-[url('https://katinat.vn/wp-content/uploads/2023/03/bg-news.jpg')] bg-fixed bg-cover bg-center">
+        <div class="bg-sky-50/90 min-h-screen py-8">
+        <div class="container">
+            <h1 class="page-title animate__animated animate__fadeInDown">Tin tức & Sự kiện</h1>
+            
+            <div class="featured-article animate__animated animate__fadeIn animate__delay-1s">
+                <img src="img/Thanh huong BANNER.jpg" alt="Tin tức nổi bật">
+                <div class="featured-content animate__animated animate__fadeInRight animate__delay-2s">
+                    <span class="news-category animate__animated animate__fadeInLeft animate__delay-2s">Sự kiện</span>
+                    <h2 class="animate__animated animate__fadeInUp animate__delay-3s">Thanh Hương sản phẩm đặc biệt</h2>
+                    <p class="news-excerpt animate__animated animate__fadeInUp animate__delay-4s">Katinat tự hào giới thiệu vị trà mới mang đậm hương vị truyền thống Việt Nam...</p>
+                    <div class="news-meta animate__animated animate__fadeIn animate__delay-5s">
+                        <span><i class="material-icons">schedule</i> 15/01/2025</span>
+                        <span><i class="material-icons">visibility</i> 1,234 lượt xem</span>
+                    </div>
+                    <button class="read-more-btn hover:animate__bounce animate__animated animate__fadeInUp animate__delay-6s">Đọc thêm</button>
+                </div>
+            </div>
+
+            <div class="news-grid">
+                <div class="news-card animate__animated animate__fadeInUp animate__delay-7s hover:animate__pulse">
+                    <img src="img/ch1.jpg" alt="Cửa hàng mới">
+                    <div class="news-info">
+                        <span class="news-category animate__animated animate__fadeInLeft animate__delay-7s">Cửa hàng</span>
+                        <h3 class="animate__animated animate__fadeInUp animate__delay-8s">Katinat khai trương cửa hàng thứ 50 tại Hà Nội</h3>
+                        <p class="animate__animated animate__fadeInUp animate__delay-9s">Với thiết kế hiện đại và không gian thoải mái, cửa hàng mới hứa hẹn mang đến trải nghiệm tuyệt vời cho khách hàng thủ đô.</p>
+                        <div class="news-meta animate__animated animate__fadeIn animate__delay-10s">
+                            <span><i class="material-icons">schedule</i> 10/01/2025</span>
+                            <span class="read-time">3 phút đọc</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-card animate__animated animate__fadeInUp animate__delay-11s hover:animate__pulse">
+                    <img src="img/sale matcha.jpg" alt="Bền vững">
+                    <div class="news-info">
+                        <span class="news-category animate__animated animate__fadeInLeft animate__delay-11s">Sản phẩm</span>
+                        <h3 class="animate__animated animate__fadeInUp animate__delay-12s">"Kưng" Katinat không giới hạn</h3>
+                        <p class="animate__animated animate__fadeInUp animate__delay-13s">Ngày hội Matcha đã đến, khi order combo 02 Iki Matcha Tàu Hủ, các "thợ săn" sẽ được "kưng" ngay 01 Iki Matcha Latte, áp dụng khi đặt hàng qua app KATINAT 😍</p>
+                        <div class="news-meta animate__animated animate__fadeIn animate__delay-14s">
+                            <span><i class="material-icons">schedule</i> 05/01/2025</span>
+                            <span class="read-time">5 phút đọc</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-card animate__animated animate__fadeInUp animate__delay-15s hover:animate__pulse">
+                    <img src="img/thay ao.jpg" alt="Giải thưởng">
+                    <div class="news-info">
+                        <span class="news-category animate__animated animate__fadeInLeft animate__delay-15s">Thành tựu</span>
+                        <h3 class="animate__animated animate__fadeInUp animate__delay-16s">Phiên bản "lột xác" của KATINAT Tên Lửa</h3>
+                        <p class="animate__animated animate__fadeInUp animate__delay-17s">Vinh dự được khách hàng bình chọn là thương hiệu đồ uống được yêu thích nhất năm 2024 tại Việt Nam.</p>
+                        <div class="news-meta animate__animated animate__fadeIn animate__delay-18s">
+                            <span><i class="material-icons">schedule</i> 28/12/2024</span>
+                            <span class="read-time">2 phút đọc</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-card animate__animated animate__fadeInUp animate__delay-19s hover:animate__pulse">
+                    <img src="img/deal.jpg" alt="Đào tạo">
+                    <div class="news-info">
+                        <span class="news-category animate__animated animate__fadeInLeft animate__delay-19s">Sản phẩm</span>
+                        <h3 class="animate__animated animate__fadeInUp animate__delay-20s">Thời tiết thì nắng mưa thất thường, nhưng ưu đãi KATINAT x GrabFood chắc chắn luôn chất lượng 😎</h3>
+                        <p class="animate__animated animate__fadeInUp animate__delay-21s">Lên lịch cùng hội bạn mở app "kưng" ưu đãi nha Katies ơi!.</p>
+                        <div class="news-meta animate__animated animate__fadeIn animate__delay-22s">
+                            <span><i class="material-icons">schedule</i> 20/12/2024</span>
+                            <span class="read-time">4 phút đọc</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-card animate__animated animate__fadeInUp animate__delay-23s hover:animate__pulse">
+                    <img src="img/6 ly.jpg" alt="Cộng đồng">
+                    <div class="news-info">
+                        <span class="news-category animate__animated animate__fadeInLeft animate__delay-23s">Cộng đồng</span>
+                        <h3 class="animate__animated animate__fadeInUp animate__delay-24s">"BẮT" TRỌN TRỜI CHUYỂN SẮC "KƯNG" 200 E-VOUCHER SĂN BST LY GIAO MÙA</h3>
+                        <p class="animate__animated animate__fadeInUp animate__delay-25s">Tháng 5 ghé qua, bầu trời nhẹ nhàng thay sắc. Khi xanh trong, lúc ửng hồng, rồi bất chợt chuyển sắc xám một khoảng trời...</p>
+                        <div class="news-meta animate__animated animate__fadeIn animate__delay-26s">
+                            <span><i class="material-icons">schedule</i> 15/12/2024</span>
+                            <span class="read-time">3 phút đọc</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-card animate__animated animate__fadeInUp animate__delay-27s hover:animate__pulse">
+                    <img src="img/kitchen.jpg" alt="Sáng tạo">
+                    <div class="news-info">
+                        <span class="news-category animate__animated animate__fadeInLeft animate__delay-27s">Sản phẩm</span>
+                        <h3 class="animate__animated animate__fadeInUp animate__delay-28s">CHÍNH THỨC RA MẮT KATINAT KITCHEN 🥳</h3>
+                        <p class="animate__animated animate__fadeInUp animate__delay-29s">Với mong muốn mang đến trải nghiệm thưởng thức trọn vẹn, không chỉ dừng lại ở thức uống...</p>
+                        <div class="news-meta animate__animated animate__fadeIn animate__delay-30s">
+                            <span><i class="material-icons">schedule</i> 08/12/2024</span>
+                            <span class="read-time">4 phút đọc</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="load-more-section animate__animated animate__fadeInUp animate__delay-31s">
+                <button class="load-more-btn hover:animate__bounce">
+                    <i class="material-icons">expand_more</i>
+                    Xem thêm tin tức
+                </button>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Về Katinat</h4>
+                    <ul>
+                        <li><a href="#">Giới thiệu</a></li>
+                        <li><a href="#">Tuyển dụng</a></li>
+                        <li><a href="#">Liên hệ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Sản phẩm</h4>
+                    <ul>
+                        <li><a href="#">Trà sữa</a></li>
+                        <li><a href="#">Cà phê</a></li>
+                        <li><a href="#">Trá trái cây</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Hỗ trợ</h4>
+                    <ul>
+                        <li><a href="#">Chính sách</a></li>
+                        <li><a href="#">Điều khoản</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Liên hệ</h4>
+                    <p><i class="material-icons">phone</i> 1900 6969</p>
+                    <p><i class="material-icons">email</i> info@katinat.vn</p>
+                    <div class="social-links">
+                        <a href="#"><i class="material-icons">facebook</i></a>
+                        <a href="#"><i class="material-icons">camera_alt</i></a>
+                        <a href="#"><i class="material-icons">alternate_email</i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="mobile-functions.js"></script>
+</body>
+</html>
